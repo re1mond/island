@@ -1,0 +1,8 @@
+﻿  island_v3.cpp
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(271): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(526): warning C4566: символ, представленный универсальным именем символа "\U0001F43A", невозможно представить в текущей кодовой странице (1251)
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(528): warning C4566: символ, представленный универсальным именем символа "\U0001F430", невозможно представить в текущей кодовой странице (1251)
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(530): warning C4566: символ, представленный универсальным именем символа "\U0001F429", невозможно представить в текущей кодовой странице (1251)
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(546): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(388): warning C4717: Enviroment::Tick: рекурсия на всех путях выполнения, функция вызовет переполнение стека
+  island_v3.vcxproj -> C:\Users\ВЛАДИМИР\source\repos\island_v3\Debug\island_v3.exe
