@@ -249,7 +249,6 @@ public:
 
 class Wolf : public Animal {
 public:
-
 	Wolf(int x, int y) : Animal(x, y) {
 
 	}
@@ -258,7 +257,7 @@ public:
 
 	}
 
-	void hunt() {
+	void hunt(int x, int y) {
 
 	}
 
@@ -266,17 +265,25 @@ public:
 
 	}
 
+	double getFullness() {
+		return fullness;
+	}
+
+	void incFullnes() {
+		fullness++;
+	}
+
 	void update() {
-		this->hunt();
 		fullness = fullness - 0.1;
 	}
 
 private:
-	int fullness = 1;
+	double fullness = 1;
 };
 
 class Wolfess : public Wolf {
 public:
+	
 	Wolfess(int x, int y) : Wolf(x, y) {
 
 	}
@@ -284,10 +291,8 @@ public:
 	Wolfess() : Wolf() {
 
 	}
-
 private:
-	int fullness = 1;
-
+	double fullness = 1;
 };
 
 class Rabbit : public Animal {
@@ -354,6 +359,7 @@ public:
 					if (wolfs_arr[i].x == rabbits_arr[q].x && wolfs_arr[i].y == rabbits_arr[q].y) {
 						rabbits_arr[q].die();
 						this->deleteRabbit(rabbits_arr, rabbits_counter, q);
+						wolfs_arr[i].incFullnes();
 					}
 			}
 		}
@@ -363,7 +369,26 @@ public:
 				if (wolfess_arr[i].x == rabbits_arr[q].x && wolfess_arr[i].y == rabbits_arr[q].y) {
 					rabbits_arr[q].die();
 					this->deleteRabbit(rabbits_arr, rabbits_counter, q);
+					wolfess_arr[i].incFullnes();
 				}
+			}
+		}
+
+		for (int i = 0; i < wolfs_counter; i++) {
+			cout << wolfs_arr[i].getFullness() << endl;
+			if (wolfs_arr[i].getFullness() <= 0) {
+				this->deleteWolf(wolfs_arr, wolfs_counter, i);
+			// ? ? ?
+				i = -1;
+			}
+		}
+
+		for (int i = 0; i < wolfesses_counter; i++) {
+			cout << wolfess_arr[i].getFullness() << endl;
+			if (wolfess_arr[i].getFullness() <= 0) {
+				this->deleteWolfess(wolfess_arr, wolfesses_counter, i);
+				// ? ? ?
+				i = -1;
 			}
 		}
 	}
@@ -380,7 +405,14 @@ public:
 				this->addRabbit(rabbits_arr, rabbits_counter, rabbits_arr[i].x, rabbits_arr[i].y);
 			}
 			rabbits_arr[i].update(rabbits_arr, *wolfs_arr, *wolfess_arr, *ptr_rabbits);
+		}
 
+		for (int i = 0; i < wolfs_counter; i++) {
+			wolfs_arr[i].update();
+		}
+
+		for (int i = 0; i < wolfesses_counter; i++) {
+			wolfess_arr[i].update();
 		}
 
 		Sleep(timeout);
@@ -436,7 +468,7 @@ public:
 			newArr[i] = arr[i];
 		}
 
-		for (int i = element; i < count; i++) {
+		for (int i = element; i < count - 1; i++) {
 			newArr[i] = arr[i + 1];
 		}
 
@@ -451,7 +483,7 @@ public:
 			newArr[i] = arr[i];
 		}
 
-		for (int i = element; i < count; i++) {
+		for (int i = element; i < count - 1; i++) {
 			newArr[i] = arr[i + 1];
 		}
 
@@ -467,7 +499,7 @@ public:
 			newArr[i] = arr[i];
 		}
 
-		for (int i = element; i < count; i++) {
+		for (int i = element; i < count - 1; i++) {
 			newArr[i] = arr[i + 1];
 		}
 
@@ -523,11 +555,11 @@ public:
 		}
 
 		SetColor(2, 0);
-		cout << "🐺 Wolfs: " << wolfs_counter << endl;
+		cout << "Wolfs: " << wolfs_counter << endl;
 		SetColor(5, 0);
-		cout << "🐰 Rabbits: " << rabbits_counter << endl;
+		cout << "Rabbits: " << rabbits_counter << endl;
 		SetColor(4, 0);
-		cout << "🐩 Wolfesses: " << wolfesses_counter << endl;
+		cout << "Wolfesses: " << wolfesses_counter << endl;
 
 	}
 
@@ -544,7 +576,7 @@ public:
 int main()
 {
 	srand(time(0));
-	Enviroment Island(0, 1, 80);
+	Enviroment Island(0, 10, 3);
 	Island.Tick();
 
 	return 0;
