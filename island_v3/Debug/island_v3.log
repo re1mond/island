@@ -1,4 +1,4 @@
 ﻿  island_v3.cpp
-c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(578): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(420): warning C4717: Enviroment::Tick: рекурсия на всех путях выполнения, функция вызовет переполнение стека
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(608): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\владимир\source\repos\island_v3\island_v3\island_v3.cpp(450): warning C4717: Enviroment::Tick: рекурсия на всех путях выполнения, функция вызовет переполнение стека
   island_v3.vcxproj -> C:\Users\ВЛАДИМИР\source\repos\island_v3\Debug\island_v3.exe

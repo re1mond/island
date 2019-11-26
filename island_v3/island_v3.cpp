@@ -26,7 +26,7 @@ public:
 
 
 
-	void walk(Animal& wolfs_arr, Animal& rabbits_arr, Animal& wolfess_arr) {
+	void walk() {
 		int next_x = x, next_y = y;
 		if (x > 0 && y > 0 && y < 20 && x < 20) {
 			int move = rand() % 8 + 1;
@@ -242,7 +242,7 @@ public:
 	}
 
 	void die() {
-		cout << endl << "Rabbit die on: [" << x << " " << y << "]";
+		//cout << endl << "Rabbit die on: [" << x << " " << y << "]";
 	}
 };
 
@@ -269,16 +269,27 @@ public:
 		return fullness;
 	}
 
+	double getAdult() {
+		return adulthood;
+	}
+
 	void incFullnes() {
 		fullness++;
 	}
 
+	void resetAdult() {
+		adulthood = 0;
+	}
+
 	void update() {
 		fullness = fullness - 0.1;
+		adulthood = adulthood + 0.1;
+		this->walk();
 	}
 
 private:
 	double fullness = 1;
+	double adulthood = 0;
 };
 
 class Wolfess : public Wolf {
@@ -293,6 +304,7 @@ public:
 	}
 private:
 	double fullness = 1;
+	double adulthood = 0;
 };
 
 class Rabbit : public Animal {
@@ -306,7 +318,7 @@ public:
 	}
 
 	void update(Animal *rabbits_arr, Animal& wolfs_arr, Animal& wolfess_arr, int& counter) {
-		this->walk(wolfs_arr, *rabbits_arr, wolfess_arr);	
+		this->walk();
 	}
 
 	bool reproduct() {
@@ -375,7 +387,25 @@ public:
 		}
 
 		for (int i = 0; i < wolfs_counter; i++) {
-			cout << wolfs_arr[i].getFullness() << endl;
+			for (int q = 0; q < wolfesses_counter; q++) {
+				if (wolfs_arr[i].x == wolfess_arr[q].x && wolfs_arr[i].y == wolfess_arr[q].y && wolfs_arr[i].getAdult() >= 1 && wolfess_arr[q].getAdult() >= 1) {
+					int male = rand() % 2 + 1;
+					if (male == 1) {
+						this->addWolf(wolfs_arr, wolfs_counter, wolfs_arr[i].x, wolfs_arr[i].y);
+						cout << "New wolf was born on [" << wolfs_arr[i].x << ":" << wolfs_arr[i].y << "]" << endl;
+					}
+					if (male == 2) {
+						this->addWolfess(wolfess_arr, wolfesses_counter, wolfs_arr[i].x, wolfs_arr[i].y);
+						cout << "New wolfess was born on [" << wolfs_arr[i].x << ":" << wolfs_arr[i].y << "]" << endl;
+					}
+					wolfs_arr[i].resetAdult();
+					wolfess_arr[q].resetAdult();
+				}
+			}
+		}
+
+		for (int i = 0; i < wolfs_counter; i++) {
+			//cout << wolfs_arr[i].getFullness() << endl;
 			if (wolfs_arr[i].getFullness() <= 0) {
 				this->deleteWolf(wolfs_arr, wolfs_counter, i);
 			// ? ? ?
@@ -384,7 +414,7 @@ public:
 		}
 
 		for (int i = 0; i < wolfesses_counter; i++) {
-			cout << wolfess_arr[i].getFullness() << endl;
+			//cout << wolfess_arr[i].getFullness() << endl;
 			if (wolfess_arr[i].getFullness() <= 0) {
 				this->deleteWolfess(wolfess_arr, wolfesses_counter, i);
 				// ? ? ?
@@ -576,7 +606,7 @@ public:
 int main()
 {
 	srand(time(0));
-	Enviroment Island(0, 10, 3);
+	Enviroment Island(15, 60, 15);
 	Island.Tick();
 
 	return 0;
